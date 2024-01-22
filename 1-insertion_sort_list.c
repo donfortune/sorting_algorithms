@@ -2,49 +2,46 @@
 #include <stdio.h>
 
 /**
- * insertion_sort_list - Sorts a doubly linked list of integers
- *                       in ascending order using insertion sort.
- * @list: A pointer to the head of the doubly linked list.
+ * insertion_sort_list - sorts a DLL of integers in
+ * ascending order using the insertion sort
+ * algorithm
+ *
+ * @list: doubly linked list
+ * Return: no return
  */
 void insertion_sort_list(listint_t **list)
 {
-        listint_t *sorted, *curr, *next, *aux, *temp;
+	listint_t *ptr, *tmp;
 
-        sorted = NULL;
-        curr = *list;
+	if (!list)
+		return;
 
-        while (curr != NULL)
-        {
-                next = curr->next;
+	ptr = *list;
 
-                if (sorted == NULL || sorted->n > curr->n)
-                {
-                        curr->next = sorted;
-                        sorted = curr;
-                } else
-                {
-                        aux = sorted;
+	while (ptr)
+	{
+		while (ptr->next && (ptr->n > ptr->next->n))
+		{
+			tmp = ptr->next;
+			ptr->next = tmp->next;
+			tmp->prev = ptr->prev;
 
-                        while (aux->next != NULL && aux->next->n <= curr->n)
-                                aux = aux->next;
+			if (ptr->prev)
+				ptr->prev->next = tmp;
 
-                        if (aux->next == NULL)
-                        {
-                                aux->next = curr;
-                                curr->prev = aux;
-                                curr->next = NULL;
-                        } else
-                        {
-                                temp = aux->next;
-                                aux->next = curr;
-                                curr->prev = aux;
-                                curr->next = temp;
-                                temp->prev = curr;
-                        }
-                }
+			if (tmp->next)
+				tmp->next->prev = ptr;
 
-                curr = next;
-        }
+			ptr->prev = tmp;
+			tmp->next = ptr;
 
-        *list = sorted;
+			if (tmp->prev)
+				ptr = tmp->prev;
+			else
+				*list = tmp;
+
+			print_list(*list);
+		}
+		ptr = ptr->next;
+	}
 }
