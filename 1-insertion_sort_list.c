@@ -2,42 +2,47 @@
 #include <stdio.h>
 
 /**
- * insertion_sort_list - Sorts a doubly linked list of integers
- *                       in ascending order using insertion sort.
- * @list: A pointer to the head of the doubly linked list.
+ * insertion_sort_list - sorts a doubly linked list
+ * @list: doubly linked list
  */
+
+
 void insertion_sort_list(listint_t **list)
 {
-	if (!list || !(*list) || !((*list)->next))
+	listint_t *current, *temp;
+
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	listint_t *current = (*list)->next;
+	current = *list;
 
 	while (current)
 	{
-		listint_t *insertion_point = current->prev;
-
-		while (insertion_point && insertion_point->n > current->n)
+		while (current->next && current->n > current->next->n)
 		{
-			if (insertion_point->next)
-				insertion_point->next->prev = current;
-
-			current->prev = insertion_point->prev;
-			insertion_point->prev = current;
+			temp = current->next;
+			current->next = temp->next;
+			temp->prev = current->prev;
 
 			if (current->prev)
-				current->prev->next = current;
-			else
-				*list = current;
+				current->prev->next = temp;
 
-			insertion_point->next = current->next;
-			current->next = insertion_point;
+			if (temp->next)
+				temp->next->prev = current;
+
+			current->prev = temp;
+			temp->next = current;
+
+			if (temp->prev)
+				current = temp->prev;
+			else
+				*list = temp;
 
 			print_list(*list);
-
-			insertion_point = current->prev;
 		}
 
 		current = current->next;
 	}
 }
+
+ChatGPT
