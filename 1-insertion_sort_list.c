@@ -2,16 +2,17 @@
 #include <stdio.h>
 
 /**
- * insertion_sort_list - Sorts a doubly linked list in ascending order
- *                        using the insertion sort algorithm.
- * @list: A pointer to the head of the doubly linked list.
+ * insertion_sort_list - sorts a doubly linked list
+ * @list: doubly linked list
  */
+
+
 void insertion_sort_list(listint_t **list)
 {
+	listint_t *current, *temp;
+
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
-
-	listint_t *current, *temp;
 
 	current = *list;
 
@@ -21,19 +22,16 @@ void insertion_sort_list(listint_t **list)
 		{
 			temp = current->next;
 			current->next = temp->next;
-
-			if (current->next)
-				current->next->prev = current;
-
 			temp->prev = current->prev;
 
-			if (temp->prev)
-				temp->prev->next = temp;
-			else
-				*list = temp;
+			if (current->prev)
+				current->prev->next = temp;
 
-			temp->next = current;
+			if (temp->next)
+				temp->next->prev = current;
+
 			current->prev = temp;
+			temp->next = current;
 
 			if (temp->prev)
 				current = temp->prev;
