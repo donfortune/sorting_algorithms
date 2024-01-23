@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /**
- * insertion_sort_list - Sorts a doubly linked list in ascending order
+ * insertion_sort_list - Sorts a doubly linked lists in ascending order
  *                        using the insertion sort algorithm.
  * @list: A pointer to the head of the doubly linked list.
  */
