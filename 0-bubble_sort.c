@@ -7,7 +7,7 @@
  * @array: The array of integer
  * @size: The size of the array
  *
- * Return: void
+ * Return: IT SHOULD RETURRN VOID
  */
 
 void bubble_sort(int *array, size_t size)
